@@ -1,4 +1,15 @@
-Below are the steps to get your plugin running. You can also find instructions at:
+🚀 Features
+Core Features
+* Bulk Text Selection – Select 1–10 Text elements in your Figma file.
+* Bulk Copy-Paste – Copy text from selected elements and paste them into an equal number of other selected elements.
+* Smart Error Handling – Get an error message if the numbers don’t match, so you don’t overwrite or lose content.
+Secondary Features
+* Intuitive UI – A clean, minimal panel within Figma for effortless copy-paste management.
+* Selection Validation – Instantly see how many Text elements are selected and whether your operation is valid.
+
+
+* ⚙️ Plugin set-up
+* Below are the steps to get your plugin running. You can also find instructions at:
 
   https://www.figma.com/plugin-docs/plugin-quickstart-guide/
 
