@@ -104,7 +104,7 @@
         if (msg.count < 1 || msg.count > msg.max) {
           showMessage('warning', `Select up to ${msg.max} <i>Text elements</i> to be copied.`);
         } else {
-          showMessage('info', `Ready. You can copy or paste.`);
+          showMessage('warning', `Select up to ${msg.max} <i>Text elements</i> to be copied.`);
         }
       }
       if (msg.type === 'copied') {
