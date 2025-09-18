@@ -1,0 +1,128 @@
+<!-- ui.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Paste me ALL</title>
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: #fff;
+      color: #222;
+      min-width: 260px;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    .info, .error, .success, .warning {
+      margin: 12px 0;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 0.75em;
+    }
+    .info { background: #f3f3f3; }
+    .error { background: #ffeaea; color: #b00; }
+    .success { background: #eaffea; color: #0a0; }
+    .warning { background: #fff7e0; color: #b88600; }
+    button {
+      flex: 1;
+      padding: 8px 16px;
+      font-size: 1em;
+      border: none;
+      border-radius: 4px;
+      background: #18a0fb;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .row {
+      margin-bottom: 12px;
+    }
+    .buttons {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h4>📋 Paste me ALL!</h4>
+  <div class="info" id="instructions">
+    1. Select up to 20 <i>Text elements</i> and click <b>Copy</b>.<br>
+    2. Select a matching amount of <i>Text elements</i> and click <b>Paste</b>.<br>
+  </div>
+  <div class="row">
+    <span id="selection-count">Selected: 0</span>
+  </div>
+  <div id="message"></div>
+  <div class="row buttons">
+    <button id="copy">Copy</button>
+    <button id="paste">Paste</button>
+    <button id="close">Close</button>
+  </div>
+  <script>
+    const selectionCount = document.getElementById('selection-count');
+    const message = document.getElementById('message');
+    const copyBtn = document.getElementById('copy');
+    const pasteBtn = document.getElementById('paste');
+    const closeBtn = document.getElementById('close');
+
+    function showMessage(type, text) {
+      message.innerHTML = `<div class="${type}">${text}</div>`;
+    }
+
+    function updateSelectionInfo() {
+      parent.postMessage({ pluginMessage: { type: 'get-selection-info' } }, '*');
+    }
+
+    window.onfocus = updateSelectionInfo;
+    document.onvisibilitychange = updateSelectionInfo;
+
+    copyBtn.onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'copy-texts' } }, '*');
+    };
+    pasteBtn.onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'paste-texts' } }, '*');
+    };
+    closeBtn.onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
+    };
+
+    onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (!msg) return;
+      if (msg.type === 'selection-info') {
+        selectionCount.textContent = `Selected: ${msg.count}`;
+        if (msg.count < 1 || msg.count > msg.max) {
+          showMessage('warning', `Select up to ${msg.max} <i>Text elements</i> to be copied.`);
+        } else {
+          showMessage('info', `Ready. You can copy or paste.`);
+        }
+      }
+      if (msg.type === 'copied') {
+        showMessage('success', `Copied ${msg.count} element(s). Now select ${msg.count} target <i>Text elements</i> and click Paste.`);
+      }
+      if (msg.type === 'pasted') {
+        showMessage('success', `Pasted into ${msg.count} <i>Text element(s)</i>!`);
+      }
+      if (msg.type === 'error') {
+        showMessage('error', 'Number of copied <i>Text elements</i> does not match the copied count.');
+      }
+      if (msg.type === 'warning') {
+        showMessage('warning', msg.message);
+      }
+    };
+
+    // Initial info
+    updateSelectionInfo();
+  </script>
+</body>
+</html>
