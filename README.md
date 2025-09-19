@@ -11,13 +11,13 @@ In fast-moving teams, designers, content strategists, and developers iterate on 
 # 🚀 Features #
 
 **Bulk Text Selection** – Select up to 20 _Text elements_ in your Figma file. <br>
-**Bulk Copy-Paste** – Copy text from selected elements **without the need of copying 1by1 content**, and paste them into an equal number of other selected elements. <br>
+**Bulk Copy-Paste** – Copy text from selected elements **without the need of copying 1 by 1 content**, and paste them into an equal number of other selected elements, keeping the same destination style! <br>
 **Selection Validation** – Instantly see how many Text elements are selected and whether your operation is valid. <br>
 **Smart Error Handling** – Get an error message if the numbers don’t match, so you don’t overwrite or lose content. <br>
 **Intuitive UI** – A clean, minimal panel within Figma for effortless copy-paste management. <br>
 
-Check it out
-LINK
+[Check it out!](https://www.figma.com/community/plugin/1550199333648647884/paste-me-all)
+
 <br>
 <br>
 # 💻 Dev #
