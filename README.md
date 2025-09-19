@@ -17,7 +17,7 @@ In fast-moving teams, designers, content strategists, and developers iterate on 
 **Intuitive UI** – A clean, minimal panel within Figma for effortless copy-paste management. <br>
 
 [Check it out!](https://www.figma.com/community/plugin/1550199333648647884/paste-me-all)
-<a href="[https://example.com/](https://www.figma.com/community/plugin/1550199333648647884/paste-me-all)" target="_blank">Check it out!</a>
+
 <br>
 <br>
 # 💻 Dev #
