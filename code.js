@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 figma.showUI(__html__, { width: 320, height: 320 });
 let copiedTexts = [];
+let copiedNodeIds = [];
 const MAX_ITEMS = 20;
 function getSelectedTextNodes() {
     return figma.currentPage.selection.filter(node => node.type === "TEXT");
@@ -33,11 +34,15 @@ figma.ui.onmessage = (msg) => __awaiter(void 0, void 0, void 0, function* () {
         }
         if (textNodes.length > MAX_ITEMS) {
             figma.ui.postMessage({ type: "warning", message: `You have selected more than ${MAX_ITEMS} items. Only the first ${MAX_ITEMS} will be copied.` });
-            copiedTexts = textNodes.slice(0, MAX_ITEMS).map(node => node.characters);
+            const nodesToCopy = textNodes.slice(0, MAX_ITEMS);
+            copiedTexts = nodesToCopy.map(node => node.characters);
+            copiedNodeIds = nodesToCopy.map(node => node.id);
             figma.ui.postMessage({ type: "copied", count: copiedTexts.length });
             return;
         }
+        // Preserve exact selection order
         copiedTexts = textNodes.map(node => node.characters);
+        copiedNodeIds = textNodes.map(node => node.id);
         figma.ui.postMessage({ type: "copied", count: copiedTexts.length });
     }
     if (msg.type === "paste-texts") {
@@ -50,6 +55,7 @@ figma.ui.onmessage = (msg) => __awaiter(void 0, void 0, void 0, function* () {
             figma.ui.postMessage({ type: "error", message: "Number of selected Text elements does not match copied count." });
             return;
         }
+        // Paste in exact selection order: 1st selected gets 1st copied, 2nd gets 2nd, etc.
         for (let i = 0; i < textNodes.length; i++) {
             try {
                 yield figma.loadFontAsync(textNodes[i].fontName);
