@@ -5,26 +5,34 @@
   <meta charset="UTF-8" />
   <title>Paste me ALL</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Inter, sans-serif;
       margin: 0;
-      padding: 24px;
+      padding: 16px;
       background: #fff;
       color: #222;
-      min-width: 260px;
+      width: 100%;
+      max-width: 400px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
     h2 {
       margin-top: 0;
+      margin-bottom: 12px;
       font-size: 1em;
       font-weight: 600;
     }
     .info, .error, .success, .warning {
-      margin: 12px 0;
+      margin: 8px 0;
       padding: 8px;
       border-radius: 4px;
       font-size: 0.75em;
     }
-    .info { background: #f3f3f3; }
+    .default { background: #f3f3f3; }
+    .info { background: #E5F6FD; }
     .error { background: #ffeaea; color: #b00; }
     .success { background: #eaffea; color: #0a0; }
     .warning { background: #fff7e0; color: #b88600; }
@@ -44,12 +52,16 @@
       cursor: not-allowed;
     }
     .row {
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .buttons {
       display: flex;
       width: 100%;
-      gap: 10px;
+      gap: 8px;
+    }
+    button {
+      min-width: 0;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -62,7 +74,7 @@
   <div class="row">
     <span id="selection-count">Selected: 0</span>
   </div>
-  <div id="message"></div>
+  <div class="default" id="message"></div>
   <div class="row buttons">
     <button id="copy">Copy</button>
     <button id="paste" disabled>Paste</button>
